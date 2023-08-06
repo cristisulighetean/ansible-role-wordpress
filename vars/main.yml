@@ -1,0 +1,7 @@
+---
+# Apache variables
+# server_name: example.com
+
+# MySQL variables
+mysql_user: wordpress # Not used
+mysql_password: wordpress

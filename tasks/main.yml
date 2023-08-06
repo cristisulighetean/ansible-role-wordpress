@@ -1,0 +1,15 @@
+---
+# Update and install necessary packages
+- include_tasks: package-install.yaml
+
+# Install wordpress
+- include_tasks: wordpress-install.yaml
+
+# Configure apache
+- include_tasks: configure-apache.yaml
+
+# Configure mysql
+- include_tasks: configure-mysql.yaml
+
+# Configure wordpress
+- include_tasks: configure-wordpress.yaml

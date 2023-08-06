@@ -1,0 +1,16 @@
+---
+- name: Create Apache site configuration for WordPress
+  template:
+    src: wordpress.conf.j2
+    dest: /etc/apache2/sites-available/wordpress.conf
+
+- name: Enable the WordPress site
+  command: a2ensite wordpress
+
+- name: Enable URL rewriting
+  command: a2enmod rewrite
+
+- name: Disable the default "It Works" site and finally reload apache
+  command: a2dissite 000-default
+  notify: Reload Apache
+

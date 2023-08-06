@@ -1,0 +1,16 @@
+---
+- name: Create directory /srv/www
+  file:
+    path: /srv/www
+    state: directory
+    mode: '0755'
+
+- name: Change ownership of /srv/www to www-data
+  file:
+    path: /srv/www
+    owner: www-data
+    group: www-data
+
+- name: Download and extract WordPress
+  shell: curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /srv/www
+

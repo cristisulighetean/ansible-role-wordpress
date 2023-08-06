@@ -1,0 +1,52 @@
+---
+- name: Copy WordPress sample configuration file
+  copy:
+    src: /srv/www/wordpress/wp-config-sample.php
+    dest: /srv/www/wordpress/wp-config.php
+    owner: www-data
+    group: www-data
+    remote_src: yes
+
+- name: Set WordPress database name
+  lineinfile:
+    path: /srv/www/wordpress/wp-config.php
+    regexp: 'database_name_here'
+    line: "define( 'DB_NAME', 'wordpress' );"
+    owner: www-data
+    group: www-data
+
+- name: Set WordPress database user
+  lineinfile:
+    path: /srv/www/wordpress/wp-config.php
+    regexp: 'username_here'
+    line: "define( 'DB_USER', 'wordpress' );"
+    owner: www-data
+    group: www-data
+
+- name: Set WordPress database password
+  lineinfile:
+    path: /srv/www/wordpress/wp-config.php
+    regexp: 'password_here'
+    line: "define( 'DB_PASSWORD', '{{ mysql_password }}' );"
+    owner: www-data
+    group: www-data
+
+- name: Fetch WordPress secret keys
+  command: curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: secret_keys
+
+- name: Remove specific authentication keys and salts
+  lineinfile:
+    path: /srv/www/wordpress/wp-config.php
+    regexp: "^define\\(\\s*'(AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)'"
+    state: absent
+
+
+- name: Insert new WordPress secret keys
+  lineinfile:
+    path: /srv/www/wordpress/wp-config.php
+    line: "{{ secret_keys.stdout }}"
+    owner: www-data
+    group: www-data
+    mode: '0644'
+
