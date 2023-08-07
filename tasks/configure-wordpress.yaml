@@ -1,5 +1,5 @@
 ---
-- name: Copy WordPress sample configuration file
+- name: Copy WordPress sample configuration file (from remote to remote)
   copy:
     src: /srv/www/wordpress/wp-config-sample.php
     dest: /srv/www/wordpress/wp-config.php
@@ -45,6 +45,7 @@
 - name: Insert new WordPress secret keys
   lineinfile:
     path: /srv/www/wordpress/wp-config.php
+    insertafter: '/\*\*#@-\*/'
     line: "{{ secret_keys.stdout }}"
     owner: www-data
     group: www-data
