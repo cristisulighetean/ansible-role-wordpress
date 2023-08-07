@@ -51,3 +51,9 @@
     group: www-data
     mode: '0644'
 
+# - name: Increase upload file size
+#   lineinfile:
+#     path: /srv/www/wordpress/.htaccess
+#     insertafter: ''
+#     line: "php_value upload_max_filesize {{ wp_max_file_size }}M"
+

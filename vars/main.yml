@@ -5,3 +5,6 @@
 # MySQL variables
 mysql_user: wordpress # Not used
 mysql_password: wordpress
+
+# Wordpress variables
+# wp_max_file_size: 64
